@@ -1,4 +1,7 @@
-import * as SearchAndAddToCartHelpers from "../../support/searchAndAddToCart/searchAndAddToCartActions";
+import {
+  search,
+  selectRandomProductAndAddToCart,
+} from "../../support/searchAndAddToCart/searchAndAddToCartHelpers";
 import {
   verifyAddProdcutToCartIndicators,
   verifyIsCorrectProductIsAddedToCart,
@@ -13,19 +16,15 @@ describe("SearchAndAddToCart", () => {
     cy.viewport("macbook-16");
   });
   beforeEach(() => {
-    cy.intercept("**/*", { log: false });
-    cy.wait(5000); // Wait for page loaded fully.
+    cy.intercept("**/**", { log: false });
   });
   it("Search And Add To Cart", () => {
-    SearchAndAddToCartHelpers.search(CONSTVALUES.electrical);
-    cy.wait(5000); // Wait for page loaded fully.
-    SearchAndAddToCartHelpers.selectRandomProductAndAddToCart();
+    search(CONSTVALUES.electrical);
+    selectRandomProductAndAddToCart();
     verifyAddProdcutToCartIndicators();
-    cy.wait(5000); // Wait for page loaded fully.
-    SearchAndAddToCartHelpers.selectRandomProductAndAddToCart();
+    selectRandomProductAndAddToCart();
     verifyAddProdcutToCartIndicators();
     navigateToUrl("Cart");
-    cy.wait(5000); // Wait for page loaded fully.
     verifyIsCorrectProductIsAddedToCart();
   });
 });

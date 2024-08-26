@@ -6,8 +6,16 @@ import {
 import { genrateRandomNumber } from "../utils";
 import { LOCATOR } from "../selectors";
 
+export const search = (searchTextValue) => {
+  cy.getDataTest(LOCATOR.headerSearchInputTextField)
+    .should("be.visible")
+    .type(searchTextValue);
+  cy.get(LOCATOR.headerSearchButton).should("be.visible").click();
+  cy.wait(5000); // Wait for page loaded fully.
+};
+
 // function to store product details in the map
-export const storeProductDetails = (mfgNumber, quantity) => {
+const storeProductDetails = (mfgNumber, quantity) => {
   const productDetails = { mfgNumber, quantity };
   selectedProductsMap.set(mfgNumber, productDetails);
   cy.log(`Stored Mfg Number: ${mfgNumber} with Quantity: ${quantity}`);
@@ -25,7 +33,7 @@ export const addProductToCart = (quantity) => {
 };
 
 // Recursive function to select and add a random product
-export const selectAndAddProduct = (products) => {
+const selectAndAddProduct = (products) => {
   const randomIndex = genrateRandomNumber(0, products.length - 1);
   const randomQuantity = genrateRandomNumber(1, 100);
   cy.wrap(products[randomIndex]).within(() => {
@@ -43,5 +51,10 @@ export const selectAndAddProduct = (products) => {
           addProductToCart(randomQuantity);
         }
       });
+  });
+};
+export const selectRandomProductAndAddToCart = () => {
+  cy.get(LOCATOR.productsList).then((products) => {
+    selectAndAddProduct(products);
   });
 };

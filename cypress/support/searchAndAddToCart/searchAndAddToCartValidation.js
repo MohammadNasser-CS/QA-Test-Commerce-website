@@ -64,4 +64,5 @@ export const verifyAddProdcutToCartIndicators = () => {
         `${addedToCartProductCount} Items`
       );
     });
+    cy.wait(2000); // Wait for page loaded fully.
 };
