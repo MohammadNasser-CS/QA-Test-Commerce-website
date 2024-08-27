@@ -24,8 +24,10 @@ const storeProductDetails = (mfgNumber, quantity) => {
 // function to interact with the product's quantity input and add to cart
 export const addProductToCart = (quantity) => {
   cy.get(LOCATOR.quantityInput)
-    .should("be.visible")
+    .should("exist") // Ensure the element exists in the DOM
+    .should("be.visible") // Ensure the element is visible
     .clear()
+    .should("have.value", "")
     .type(quantity)
     .then(() => {
       cy.get(LOCATOR.addToCartButton).should("be.visible").click();
@@ -34,6 +36,8 @@ export const addProductToCart = (quantity) => {
 
 // Recursive function to select and add a random product
 const selectAndAddProduct = (products) => {
+  cy.intercept("**/**", { log: false }).as("getProducts");
+  cy.wait("@getProducts"); // Wait for the API to finish
   const randomIndex = genrateRandomNumber(0, products.length - 1);
   const randomQuantity = genrateRandomNumber(1, 100);
   cy.wrap(products[randomIndex]).within(() => {

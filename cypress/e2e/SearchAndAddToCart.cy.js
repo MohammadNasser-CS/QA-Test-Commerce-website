@@ -1,12 +1,13 @@
 import {
   search,
   selectRandomProductAndAddToCart,
-} from "../../support/searchAndAddToCart/searchAndAddToCartHelpers";
+} from "../support/searchAndAddToCart/searchAndAddToCartHelpers";
 import {
   verifyAddProdcutToCartIndicators,
   verifyIsCorrectProductIsAddedToCart,
-} from "../../support/searchAndAddToCart/searchAndAddToCartValidation";
-import { navigateToUrl } from "../../support/utils";
+} from "../support/searchAndAddToCart/searchAndAddToCartValidation";
+import { ROUTES } from "../support/selectors";
+import { navigateToUrl } from "../support/utils";
 export const CONSTVALUES = {
   electrical: "Electrical",
 };
@@ -16,7 +17,8 @@ describe("SearchAndAddToCart", () => {
     cy.viewport("macbook-16");
   });
   beforeEach(() => {
-    cy.intercept("**/**", { log: false });
+    cy.intercept("**/**", { log: false }).as("getProducts");
+    cy.wait("@getProducts"); // Wait for the API to finish
   });
   it("Search And Add To Cart", () => {
     search(CONSTVALUES.electrical);
@@ -24,7 +26,7 @@ describe("SearchAndAddToCart", () => {
     verifyAddProdcutToCartIndicators();
     selectRandomProductAndAddToCart();
     verifyAddProdcutToCartIndicators();
-    navigateToUrl("Cart");
+    navigateToUrl(ROUTES.cartPage);
     verifyIsCorrectProductIsAddedToCart();
   });
 });

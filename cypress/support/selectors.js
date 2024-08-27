@@ -11,3 +11,8 @@ export const LOCATOR = {
   miniCartItemsNumber: '[data-test-selector="cartLinkQuantity"]',
   toastSuccessNotification: '[data-test-selector="toastsuccess"]',
 };
+export const ROUTES={
+  homePage:"",
+  cartPage:"/Cart",
+  quickOrder:"/QuickOrder",
+}
