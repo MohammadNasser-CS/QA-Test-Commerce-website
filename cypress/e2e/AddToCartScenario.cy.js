@@ -1,17 +1,16 @@
 import {
+  CONSTVALUES,
   search,
   selectRandomProductAndAddToCart,
-} from "../support/searchAndAddToCart/searchAndAddToCartHelpers";
+} from "../support/AddToCartScenario/AddToCartScenarioHelpers";
 import {
   verifyAddProdcutToCartIndicators,
   verifyIsCorrectProductIsAddedToCart,
-} from "../support/searchAndAddToCart/searchAndAddToCartValidation";
-import { ROUTES } from "../support/selectors";
+} from "../support/AddToCartScenario/AddToCartScenarioValidation";
+import { ROUTES } from "../support/AddToCartScenario/selectors";
 import { navigateToUrl } from "../support/utils";
-export const CONSTVALUES = {
-  electrical: "Electrical",
-};
-describe("SearchAndAddToCart", () => {
+
+describe("Add To Cart Scenario", () => {
   before(() => {
     navigateToUrl();
     cy.viewport("macbook-16");

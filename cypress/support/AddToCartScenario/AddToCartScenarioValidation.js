@@ -1,16 +1,12 @@
-import { LOCATOR } from "../selectors";
+import { LOCATOR } from "./selectors";
 
 export const selectedProductsMap = new Map();
-let addedToCartProductCount = 0;
 // Function to check if a product is already in the cart
 export const isProductAlreadyAdded = (mfgNumber) => {
   return selectedProductsMap.has(mfgNumber);
 };
-export const incrementAddedProductCount = () => {
-  addedToCartProductCount += 1;
-};
 // Function to check if a product is correctly added to the cart
-export const isProductCorrectlyAdded = (trimmedMfgNumber, quantity) => {
+const isProductCorrectlyAdded = (trimmedMfgNumber, quantity) => {
   const product = selectedProductsMap.get(trimmedMfgNumber);
   return product && product.quantity == quantity;
 };
@@ -61,8 +57,8 @@ export const verifyAddProdcutToCartIndicators = () => {
       // Verify the inner text matches the expected value
       cy.wrap(miniCartItemsNumber.trim()).should(
         "eq",
-        `${addedToCartProductCount} Items`
+        `${selectedProductsMap.size} Items`
       );
     });
-    cy.wait(2000); // Wait for page loaded fully.
+  cy.wait(2000); // Wait for page loaded fully.
 };

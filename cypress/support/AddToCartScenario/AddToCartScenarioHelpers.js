@@ -1,11 +1,12 @@
 import {
-  incrementAddedProductCount,
   isProductAlreadyAdded,
   selectedProductsMap,
-} from "./searchAndAddToCartValidation";
+} from "./AddToCartScenarioValidation";
 import { genrateRandomNumber } from "../utils";
-import { LOCATOR } from "../selectors";
-
+import { LOCATOR } from "./selectors";
+export const CONSTVALUES = {
+  electrical: "Electrical",
+};
 export const search = (searchTextValue) => {
   cy.getDataTest(LOCATOR.headerSearchInputTextField)
     .should("be.visible")
@@ -51,7 +52,6 @@ const selectAndAddProduct = (products) => {
         } else {
           // Store the product details and add to cart
           storeProductDetails(trimmedMfgNumber, randomQuantity);
-          incrementAddedProductCount();
           addProductToCart(randomQuantity);
         }
       });
